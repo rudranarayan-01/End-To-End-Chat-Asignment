@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,20 +6,45 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { MessageSquareQuote, ShieldCheck, User } from 'lucide-react';
+import { api } from '@/services/api'; // Make sure this file exists (see step 2)
 
 export default function AuthPage() {
     const navigate = useNavigate();
 
+    // State for Login
+    const [loginData, setLoginData] = useState({ username: '', password: '' });
+    // State for Signup
+    const [signupData, setSignupData] = useState({ fullName: '', username: '', password: '' });
+
+    const handleLogin = async () => {
+        try {
+            const response = await api.post('/login', loginData);
+            localStorage.setItem('user', JSON.stringify(response.data));
+            navigate('/dashboard');
+        } catch (error: any) {
+            alert(error.response?.data?.error || "Login failed");
+        }
+    };
+
+    const handleSignup = async () => {
+        try {
+            await api.post('/signup', signupData);
+            alert("Account created! Please login.");
+            window.location.reload(); // Refresh to show login tab
+        } catch (error: any) {
+            alert(error.response?.data?.error || "Signup failed");
+        }
+    };
+
     return (
-        <div className="h-full w-full flex items-center justify-center bg-slate-50 relative">
-            {/* Decorative Blobs */}
+        <div className="h-full min-h-screen w-full flex items-center justify-center bg-slate-50 relative">
             <div className="absolute top-0 left-0 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
             <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
 
             <div className="w-full max-w-105 px-6 z-10">
                 <div className="flex flex-col items-center mb-10">
                     <div className="w-16 h-16 bg-primary flex items-center justify-center rounded-2xl shadow-xl shadow-primary/20 mb-4 rotate-3">
-                        <MessageSquareQuote className="w-10 h-10 text-black" />
+                        <MessageSquareQuote className="w-10 h-10 text-white" />
                     </div>
                     <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Nexus</h1>
                     <p className="text-slate-500 mt-2">Professional messaging for teams</p>
@@ -32,28 +58,37 @@ export default function AuthPage() {
 
                     <TabsContent value="login">
                         <Card className="border-none shadow-xl shadow-slate-200/50">
-                            <CardHeader className="space-y-1">
+                            <CardHeader>
                                 <CardTitle className="text-2xl">Sign in</CardTitle>
-                                <CardDescription>Enter your username and password</CardDescription>
+                                <CardDescription>Enter your credentials</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="space-y-2">
                                     <Label>Username</Label>
                                     <div className="relative">
                                         <User className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
-                                        <Input className="pl-10 h-12" placeholder="username" />
+                                        <Input
+                                            className="pl-10 h-12"
+                                            placeholder="username"
+                                            onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                                        />
                                     </div>
                                 </div>
                                 <div className="space-y-2">
                                     <Label>Password</Label>
                                     <div className="relative">
                                         <ShieldCheck className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
-                                        <Input type="password" className="pl-10 h-12" placeholder="••••••••" />
+                                        <Input
+                                            type="password"
+                                            className="pl-10 h-12"
+                                            placeholder="••••••••"
+                                            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                                        />
                                     </div>
                                 </div>
                             </CardContent>
                             <CardFooter>
-                                <Button className="w-full h-12 text-lg font-semibold" variant="outline" onClick={() => navigate('/dashboard')}>
+                                <Button className="w-full h-12 text-lg font-semibold" variant="outline" onClick={handleLogin}>
                                     Login to Account
                                 </Button>
                             </CardFooter>
@@ -62,27 +97,36 @@ export default function AuthPage() {
 
                     <TabsContent value="signup">
                         <Card className="border-none shadow-xl shadow-slate-200/50">
-                            <CardHeader className="space-y-1">
+                            <CardHeader>
                                 <CardTitle className="text-2xl">Create Account</CardTitle>
                                 <CardDescription>Start your 100% free account</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
-                                <Input className="h-12" placeholder="Full Name" />
-                                <Input className="h-12" placeholder="Choose Username" />
-                                <Input className="h-12" type="password" placeholder="Password" />
+                                <Input
+                                    className="h-12"
+                                    placeholder="Full Name"
+                                    onChange={(e) => setSignupData({ ...signupData, fullName: e.target.value })}
+                                />
+                                <Input
+                                    className="h-12"
+                                    placeholder="Choose Username"
+                                    onChange={(e) => setSignupData({ ...signupData, username: e.target.value })}
+                                />
+                                <Input
+                                    className="h-12"
+                                    type="password"
+                                    placeholder="Password"
+                                    onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
+                                />
                             </CardContent>
                             <CardFooter>
-                                <Button className="w-full h-12 text-lg font-semibold" variant="outline" onClick={() => navigate('/dashboard')}>
+                                <Button className="w-full h-12 text-lg font-semibold" variant="outline" onClick={handleSignup}>
                                     Register Now
                                 </Button>
                             </CardFooter>
                         </Card>
                     </TabsContent>
                 </Tabs>
-
-                <p className="mt-8 text-center text-sm text-slate-400">
-                    By continuing, you agree to our Terms of Service.
-                </p>
             </div>
         </div>
     );
