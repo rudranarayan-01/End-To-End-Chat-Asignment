@@ -53,7 +53,7 @@ export default function AuthPage() {
                                 </div>
                             </CardContent>
                             <CardFooter>
-                                <Button className="w-full h-12 text-lg font-semibold" onClick={() => navigate('/dashboard')}>
+                                <Button className="w-full h-12 text-lg font-semibold" variant="outline" onClick={() => navigate('/dashboard')}>
                                     Login to Account
                                 </Button>
                             </CardFooter>
