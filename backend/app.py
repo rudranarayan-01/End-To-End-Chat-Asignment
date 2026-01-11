@@ -1,3 +1,6 @@
+from gevent import monkey
+monkey.patch_all()
+
 import datetime
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -10,11 +13,11 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 # Deployment changes
-# CORS(app, resources={r"/*": {"origins": "https://chat-end-toend-frontend.onrender.com/"}})
-# socketio = SocketIO(app, cors_allowed_origins="https://chat-end-toend-frontend.onrender.com/", async_mode='gevent')
+CORS(app, resources={r"/*": {"origins": "https://chat-end-toend-frontend.onrender.com/"}})
+socketio = SocketIO(app, cors_allowed_origins="https://chat-end-toend-frontend.onrender.com/", async_mode='gevent')
 
-CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+# CORS(app)
+# socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 # Database Setup
