@@ -38,7 +38,7 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="w-[350px] min-w-[350px] h-full flex flex-col bg-slate-50/50 shrink-0">
+        <aside className="w-87.5 min-w-87.5 h-full flex flex-col bg-slate-50/50 shrink-0">
             <div className="p-6 pb-2 flex items-center justify-between">
                 <div>
                     <h1 className="text-2xl font-bold tracking-tight">Messages</h1>

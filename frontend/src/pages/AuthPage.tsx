@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
-import { MessageSquareQuote, ShieldCheck, User } from 'lucide-react';
+import { MessageSquare, ShieldCheck, User } from 'lucide-react';
 import { api } from '@/services/api'; // Make sure this file exists (see step 2)
 
 export default function AuthPage() {
@@ -44,9 +44,9 @@ export default function AuthPage() {
             <div className="w-full max-w-105 px-6 z-10">
                 <div className="flex flex-col items-center mb-10">
                     <div className="w-16 h-16 bg-primary flex items-center justify-center rounded-2xl shadow-xl shadow-primary/20 mb-4 rotate-3">
-                        <MessageSquareQuote className="w-10 h-10 text-white" />
+                        <MessageSquare className="w-10 h-10 text-black" />
                     </div>
-                    <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Nexus</h1>
+                    <h1 className="text-4xl font-extrabold tracking-tight text-slate-900">Sync</h1>
                     <p className="text-slate-500 mt-2">Professional messaging for teams</p>
                 </div>
 
