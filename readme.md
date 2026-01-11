@@ -40,3 +40,6 @@ A professional, real-time messaging platform built with a modern full-stack arch
     Flask-Bcrypt (Security)
 
     Flask-CORS
+
+    
+### Live : https://chat-end-toend-frontend.onrender.com/
