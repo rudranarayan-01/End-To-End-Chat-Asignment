@@ -5,3 +5,4 @@ flask-socketio
 flask-bcrypt
 gunicorn
 eventlet
+psycopg2-binary

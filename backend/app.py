@@ -10,15 +10,23 @@ app = Flask(__name__)
 CORS(app) 
 bcrypt = Bcrypt(app)
 
+database_url = os.environ.get("DATABASE_URL" or None)
+
 
 # SocketIO Setup
 socketio = SocketIO(app, cors_allowed_origins="*")
 
+if database_url and database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url or 'sqlite:///nexus.db'
+
 
 # Database Setup
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sync.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
 
 # Database Table
 class User(db.Model):
