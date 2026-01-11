@@ -1,3 +1,4 @@
+
 import datetime
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -13,7 +14,7 @@ bcrypt = Bcrypt(app)
 
 
 # SocketIO Setup
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
 
 
 # Database Setup
@@ -115,10 +116,7 @@ def handle_message(data):
     )
     db.session.add(new_msg)
     db.session.commit()
-
-    # 2. Broadcast the message to everyone connected
-    # In a production app, you'd use 'rooms', but for an assignment, 
-    # broadcasting is the easiest way to show real-time flow.
+    # 2. Emit to all connected clients
     emit('receive_message', new_msg.to_dict(), broadcast=True)
 
 # Send Message Route
