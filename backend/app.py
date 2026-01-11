@@ -1,4 +1,3 @@
-
 import datetime
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -8,13 +7,14 @@ from flask_socketio import SocketIO, emit
 import os
 
 app = Flask(__name__)
-CORS(app) 
 bcrypt = Bcrypt(app)
 
+# Deployment changes
+# CORS(app, resources={r"/*": {"origins": "https://chat-end-toend-frontend.onrender.com/"}})
+# socketio = SocketIO(app, cors_allowed_origins="https://chat-end-toend-frontend.onrender.com/", async_mode='gevent')
 
-
-# SocketIO Setup
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='gevent')
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 # Database Setup
@@ -155,11 +155,12 @@ def get_chat_history(user1, user2):
 
 
 
-#### # Run the App
 if __name__ == '__main__':
     with app.app_context():
+        print("Creating database tables...")
         db.create_all()
     
-    # Get port from environment variable or default to 5000
     port = int(os.environ.get("PORT", 5000))
-    socketio.run(app, host='0.0.0.0', port=port)
+    print(f"Server starting on http://127.0.0.1:{port}")
+    
+    socketio.run(app, host='127.0.0.1', port=port, debug=True)
