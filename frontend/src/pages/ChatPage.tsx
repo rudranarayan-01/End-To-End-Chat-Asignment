@@ -8,7 +8,7 @@ import Sidebar from '@/components/SideBar';
 import { io } from 'socket.io-client';
 
 // Initialize Socket.IO client
-const socket = io('http://127.0.0.1:5000');
+const socket = io('http://127.0.0.1:5000' || 'https://end-to-end-chat-backend.onrender.com');
 
 export default function ChatPage() {
     const { userId } = useParams(); 
