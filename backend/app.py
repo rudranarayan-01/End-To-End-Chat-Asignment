@@ -13,8 +13,15 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 # Deployment changes
-CORS(app, resources={r"/*": {"origins": "https://chat-end-toend-frontend.onrender.com/"}})
-socketio = SocketIO(app, cors_allowed_origins="https://chat-end-toend-frontend.onrender.com/", async_mode='gevent')
+
+CORS(app, resources={r"/*": {"origins": "https://chat-end-to-end-frontend.onrender.com"}})
+
+# 2. Update SocketIO for real-time WebSocket connections
+socketio = SocketIO(
+    app, 
+    cors_allowed_origins="https://chat-end-to-end-frontend.onrender.com",
+    async_mode='gevent' # As established for your Render deployment
+)
 
 # CORS(app)
 # socketio = SocketIO(app, cors_allowed_origins="*")
