@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_socketio import SocketIO, emit
+import os
 
 app = Flask(__name__)
 CORS(app) 
@@ -140,7 +141,6 @@ def send_message():
 # Get Chat History Route
 @app.route('/messages/<int:user1>/<int:user2>', methods=['GET'])
 def get_chat_history(user1, user2):
-    # Fetch messages where (A sent to B) OR (B sent to A)
     messages = Message.query.filter(
         ((Message.sender_id == user1) & (Message.receiver_id == user2)) |
         ((Message.sender_id == user2) & (Message.receiver_id == user1))
@@ -153,7 +153,12 @@ def get_chat_history(user1, user2):
     } for m in messages]), 200
 
 
+
+#### # Run the App
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all() 
-    socketio.run(app, debug=True, port=5000)
+        db.create_all()
+    
+    # Get port from environment variable or default to 5000
+    port = int(os.environ.get("PORT", 5000))
+    socketio.run(app, host='0.0.0.0', port=port)
