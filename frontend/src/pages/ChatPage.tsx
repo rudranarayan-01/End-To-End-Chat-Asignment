@@ -137,7 +137,7 @@ export default function ChatPage() {
                                 ? 'bg-indigo-600 text-white rounded-tr-none' 
                                 : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none'
                             }`}>
-                                <p className="text-[14px] leading-relaxed break-words">{msg.content}</p>
+                                <p className="text-[14px] leading-relaxed wrap-break-word">{msg.content}</p>
                                 <span className={`text-[9px] mt-2 block font-medium opacity-70 ${msg.sender_id === currentUser?.id ? 'text-right' : 'text-left'}`}>
                                     {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                 </span>
