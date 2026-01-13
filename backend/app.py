@@ -20,7 +20,7 @@ CORS(app, resources={r"/*": {"origins": "https://chat-end-toend-frontend.onrende
 socketio = SocketIO(
     app, 
     cors_allowed_origins="https://chat-end-toend-frontend.onrender.com",
-    async_mode='gevent' # As established for your Render deployment
+    async_mode='gevent' # As established for Render deployment
 )
 
 # CORS(app)
