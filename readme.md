@@ -13,6 +13,7 @@ A professional, real-time messaging platform built with a modern full-stack arch
     - Isolated Conversations: Chat history is private and unique between specific user pairs.
 
     - Dynamic UI: Auto-scrolling chat windows, glassmorphism headers, and "Online" status indicators.
+    
 
 ## Tech Stack
 ### Frontend:
