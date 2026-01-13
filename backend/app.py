@@ -118,7 +118,7 @@ def get_user_details(user_id):
 
 @socketio.on('send_message')
 def handle_message(data):
-    # 1. Save to Database (same logic as your POST route)
+    # 1. Save to Database (same logic as POST route)
     new_msg = Message(
         sender_id=data['sender_id'],
         receiver_id=data['receiver_id'],
